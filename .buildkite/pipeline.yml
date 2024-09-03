@@ -1,7 +1,7 @@
 steps:
   - label: "Generate Artifact"
     command: "cd hello && go build -o ./dist/my-app"
-    artifact_paths: "hello/dist/my-app"
+    artifact_paths: "*/my-app"
     plugins:
       - docker#v5.11.0:
           image: "golang:1.18.0"
@@ -13,4 +13,3 @@ steps:
   - command: "buildkite-agent artifact download --step 'Generate Artifact' '*/my-app' ./hello \
               && chmod +x ./hello \
               && ./hello $(buildkite-agent meta-data get username)"
-          
