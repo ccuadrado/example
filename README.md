@@ -19,3 +19,5 @@ $ ./hello/hello John Doe
 ```
 
 The above will return 'Hello, John Doe!'
+
+This repo will automatically trigger a buildkite build at https://buildkite.com/personal-219/bk-example when a change is made.
