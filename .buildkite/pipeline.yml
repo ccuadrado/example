@@ -11,5 +11,6 @@ steps:
     fields:
       - text: "User Name:"
         key: "username"
-  - command: "buildkite-agent artifact download --step 'Generate Artifact' '*/my-app' . && mv hello/dist/my-app ./my-app && chmod +x ./my-app && ./my-app $(buildkite-agent meta-data get username) "
+  - command: "buildkite-agent artifact download --step 'Generate Artifact' '*/my-app' ./hello \
+              && chmod +x ./hello && ./hello $(buildkite-agent meta-data get username)"
           
