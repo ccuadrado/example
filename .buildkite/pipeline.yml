@@ -1,18 +1,24 @@
 steps:
   - label: "Generate Artifact"
+    key: "generate-artifact"
     command: "cd hello && go build -o ./dist/my-app"
     artifact_paths: "hello/dist/my-app"
     plugins:
       - docker#v5.11.0:
           image: "golang:1.18.0"
           mount-buildkite-agent: true
-  - block: "Get user name"
+  - label: "Get User Input"
+    key: "get-user-input"
+    block: "Get user name"
     prompt: "Please enter your name:"
+    depends_on: ["generate-artifact"]
     fields:
       - text: "User Name:"
         key: "username"
-  - command: "buildkite-agent artifact download --step 'Generate Artifact' '*/my-app' . && \
+  - label: "Perform Execution"
+    key: "perform-execution"
+    command: "buildkite-agent artifact download --step 'Generate Artifact' '*/my-app' . && \
               mv hello/dist/my-app ./my-app && \
               chmod +x ./my-app && \
               ./my-app $(buildkite-agent meta-data get username)"
-          
+    depends_on: ["get-user-input"]
